@@ -1,0 +1,202 @@
+<!-- Robert Doult-->
+<!-- JavaScript Fundamentals (BLEND 39174) CSCI-2447-B04-39174-SP-2020-->
+<!-- Project 7 20200423-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "UTF-8">
+		<meta charset="viewport" content="width=device-width, inial-scale=1.0">
+		<title>JavaScript(CSCI2447)</title>
+		<link href="css/game.css" rel="stylesheet" />
+		<script src=js/jquery-3.4.1.min.js></script>
+		<link href="jquery-ui-themes-1.12.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
+		<script src=jquery-ui-themes-1.12.1/jquery-ui.js></script>
+		<script>
+			var score  = 0;													<!-- sets default score  to zero --> 
+			var time_left = 30;												<!-- set the total timer of the game-->
+			var clock;
+			
+			$(document).ready(function() {
+			$("#dialog-message" ).dialog({ autoOpen: false });   			<!-- setting to false stops the dialog-message loading at the start --> 
+			$('#family').animate(
+				{
+				  left: '+=400px',
+				},
+				1000, 
+			
+			function() { // first callback function
+				  $('#caption').fadeIn(1500, 
+				   function() { // second callback function
+					  $('#family, #caption').fadeOut(1500);
+				   } // end second callback
+				); // end fadeIn
+			   } // end first callback function
+			); // end animate
+						
+			$( "#start_button" ).click(function() {
+			$( "#block" ).show();
+			$( "#block" ).animate({
+				width: "80%",
+				opacity: 0.8,
+				marginLeft: "0.6in",
+				fontSize: "3em",
+				borderWidth: "5px"
+			}, 1500 )
+			.fadeOut(3500);
+			});	
+							
+			$('#start_button').click(function() {
+				startGame();
+				$(this).off("click"); 										<!-- stops games restarting on click start -->	
+					$('#gamespace').on('click', "img", function() {
+					incScore();			
+					$('#Dooooh').html("<audio autoplay><source src='img/Dooooh.mp3' type='audio/mpeg'> </audio>")
+					});//end gamespace
+				});//end start_button
+			});//end document
+				
+			function startGame(){
+			$("html").on("click", "button", function(event){     			<!-- https://api.jquery.com/event.delegateTarget/ -->
+			$(event.delegateTarget).css("background-color", "#fed90f");
+			});
+			
+			$( "#gamespace" ).on("click","img",function() {					<!--needed call gamespace then on click choose image -->
+			$( this ).effect( "explode",{pieces: 6 }, 200 );
+			});
+			
+			updateTimer()
+			$("#timer").show();
+				if(time_left > 0){
+				addMole();
+				}//end countdown
+			$('#music').html("<audio autoplay><source src='img/01.mp3' type='audio/mpeg'></audio>")
+			}//end startGame
+			
+			function randPosY(){
+				let min=5; 
+				let max=250;  
+				let randomy = 
+				Math.floor(Math.random() * (+max - +min)) + +min;
+			return randomy;
+			};//end randPosY
+			
+			function randPosX(){
+				let min=5; 
+				let max=440;  
+				let randomx = 
+				Math.floor(Math.random() * (+max - +min)) + +min;
+			return randomx;
+			};//end randPosX
+			
+			function incScore() {
+				score  += 1;
+				$("#score").html(score  + " points");
+			}//end incScore
+			
+			function updateTimer(){
+				if (time_left > 0){
+				$("#timer").html(time_left + " seconds left");
+				time_left -= 1;
+				setTimeout("updateTimer()", 1000);
+				}
+				else{
+				time_left = 0;
+				$('#block').hide();
+				$('#music').html("")
+				$('#timer').html('Game Over!');
+				$('#bart' ).show();
+				$('#crusty' ).show();
+				$('#marge' ).show();
+				$('#maggie' ).show();
+				$('#lisa' ).show();
+				$('#homer' ).show();
+				$('#family' ).show();
+				
+				
+				$('#dialog-message' ).dialog({ 
+				autoOpen: true												<!-- setting to true opens the dialog-message loading at the end --> 
+				});
+				 $("#message1").html("You got " + score + " points");
+				 $("#message2").html("Great Job!");
+				 $("#message3").html("Click OK to play Again");
+				}//end else
+			}//end updateTimer
+						
+			function addMole (){
+			var xpos = randPosX();
+			var ypos = randPosY();
+			var random = randomMole();
+			var count = 0;
+			$('#gamespace').append('<img src="img/mole.png" style="top:' + ypos + 'px;left:' + xpos + 'px;"/>');
+			$("img").attr("img",function(count){ return "mole" + count;}).fadeOut(deleteMole());
+				if (time_left > 0){
+				clock =setTimeout("addMole()", random);						<!-- needed clock for the setTimeout -->
+				} //end setTimeout 
+				if(time_left<0){
+				clearTimeout(clock);
+				} //end if clearTimeout
+			} //end addMole	
+									
+			function randomMole() {
+			return Math.floor((Math.random() * 2000) + 1);
+			}//end randomMole
+			
+			function deleteMole() {
+			return Math.floor((Math.random() * 2000) + 1500);
+			}//end deleteMole
+			
+			$("#start_button").click(function() {
+			$( "#dialog-message" ).dialog( "open" );
+			});
+			
+			$(function() {
+			$( "#dialog-message" ).dialog({
+			  modal: true,													<!--Modal dialogs create an overlay below the dialog but above other page elements -->
+			  buttons: {
+				Ok: function() {
+				  $( this ).dialog( "close" );
+				  location.reload();
+				}
+			  }
+			});//end dialog-message
+			 });
+		</script>	
+		</script>	
+	</head>
+	<body>
+		<div class="wrapper">
+			<div id="content">
+				<div id="music"></div>
+				<div id="Dooooh"></div>
+				<div id="dialog-message" title="Game Over">
+					<p><span class="ui-icon 	ui-icon-person" style="float:left; margin:0 7px 50px 0;"></span></p>
+					<div id="message1"></div>
+					<div id="message2"></div>
+					<div id="message3"></div>
+				</div>
+				<h1>Whack-A-Simpson</h1>
+				<p>After clicking "start", you will have 30 seconds to click as many Homer as you can.<br><br>Homer appear randomly so be ready!</p>
+				<div class="meta">
+					<section id="clock">
+					</section>
+					<div id="controls">
+						<button class="ui-button ui-widget ui-corner-all" type="button" id="score">0 pts
+						<span class="ui-icon ui-icon-gear ui-widget-icon-block"></span></button>			
+						<button class="ui-button ui-widget ui-corner-all" type="button" id="start_button">Click to Start!Start!  
+						<span class="ui-icon ui-icon-gear ui-widget-icon-block"></span></button>
+					</div>
+					<div id="timer" class="ui-button ui-widget ui-corner-all">"30 seconds left"</div>
+					<div id="gamespace"</div>
+					<div id="crusty1"><img src="img/crusty.png" alt="crusty" id="crusty"></div>
+					<div id="lisa1"><img src="img/lisa.png" alt="lisa" id="lisa"></div>
+					<div id="family1">
+					<img src="img/family.png" width="268" height="315" alt="family" id="family">
+					<p id="caption">"I hope I didn’t brain my damage." by Homer Simpson</p>
+					</div>
+				<div id="bart1"><img src="img/bart.png" alt="bart" id="bart">
+				<div id="maggie1"><img src="img/maggie.png" alt="maggie" id="maggie">
+				<div id="marge1"><img src="img/marge.png" alt="marge" id="marge">
+			</div>
+		</body>
+		<div id="block">WHACK!</div>
+	</html>

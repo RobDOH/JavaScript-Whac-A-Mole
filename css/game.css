@@ -1,0 +1,143 @@
+/* CSS Document */
+
+html, body {
+	width: 700px;
+	margin: 0 auto;
+	font-family: sans-serif;
+	font-size: 13px;
+	color: white;
+	background-color: #70D1FE; 
+	}
+
+h1 {
+	border: 3px red solid;
+	margin: 2px;
+	color: white;
+	background-color: #70D1FE; 
+	text-align: center;	
+	}
+	
+P 	{
+	text-align: center;
+	font-weight: bold;
+	color: white;
+	}
+	
+button {
+	font-size: 12px;
+	font-weight: bold;
+	padding: 8px;
+	}
+	
+div#content {
+	padding: 20px;
+	background-color: #d1b271 ;
+	}
+	
+div#controls {
+	text-align: right;
+	}
+	
+div#controls span {
+	font-weight: bold;
+	color: red;
+	}
+
+div#timer {
+	display: none;
+	font-weight: bold; 
+	margin-left: 20px; 
+	color: red;
+	}
+	
+div#gamespace {
+	margin: 20px;
+	padding: 10px;
+	height: 380px;
+	background-color: #FFF;
+	border: 2px solid #CCC;
+	position: relative; 	
+	}
+	
+div#gamespace img { 
+	position: absolute;
+	cursor: crosshair; <!-- makes mouse appear like sight when hover over image -->
+	}
+	
+img#mole {
+	display: none; 
+	}
+	
+#family1 {
+  position: relative;
+  width: 400px;
+  margin: 0px;
+  height: 300px;
+  overflow: hidden;
+	}
+
+#family {
+	position: absolute;	
+	left: -400px;
+	}
+
+#caption {
+	position: absolute;
+	width: 	340px;
+	background-color: red;
+	bottom: 10px;
+	left: 24px;
+	padding: 5px;
+	border: 1px solid white;
+	display: none;
+	display: none;
+	color: white;
+	}
+
+ #block {
+	display: none;
+    background-color: #70D1FE;
+    width: 20px;
+    border: 1px solid white;
+	text-align: center;	
+}
+
+img#bart {
+	display: none; 
+	}
+
+#bart1 {
+    text-align: center;
+}
+
+img#marge {
+	display: none; 
+	}		
+#marge1 {
+ text-align: right;
+}
+
+img#maggie {
+	display: none; 
+	}
+
+#maggie1 {
+text-align: left;
+}	
+
+img#lisa {
+	display: none; 
+	}
+
+#lisa1 {
+text-align: center;
+}
+
+img#crusty {
+	display: none; 
+	}
+
+#crusty1 {
+text-align: right;
+}
+ 
